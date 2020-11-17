@@ -1,12 +1,12 @@
 package com.company.shortestpath;
 
-public class Transaction {
+public class TransactionEntry {
 
 
     private int timestamp;
     private String account_to;
     private String account_from;
-    Transaction(int timestamp, String account_to, String account_from){
+    TransactionEntry(int timestamp, String account_to, String account_from){
         this.timestamp = timestamp;
         this.account_to = account_to;
         this.account_from = account_from;

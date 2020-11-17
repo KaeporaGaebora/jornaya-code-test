@@ -11,29 +11,29 @@ public class ShortPath {
     private void setup(){
         //create transaction data.
 
-        List<Transaction> transactionList = new ArrayList<>();
-        transactionList.add(new Transaction(1, "AB", null));
-        transactionList.add(new Transaction(2, "YZ", "AB"));
-        transactionList.add(new Transaction(3, "MN", "YZ"));
-        transactionList.add(new Transaction(3, "QR", "YZ"));
+        List<TransactionEntry> transactionEntryList = new ArrayList<>();
+        transactionEntryList.add(new TransactionEntry(1, "AB", null));
+        transactionEntryList.add(new TransactionEntry(2, "YZ", "AB"));
+        transactionEntryList.add(new TransactionEntry(3, "MN", "YZ"));
+        transactionEntryList.add(new TransactionEntry(3, "QR", "YZ"));
 
-        transactionList.add(new Transaction(3, "HI", "YZ"));
-        transactionList.add(new Transaction(4, "CD", "MN"));
-        transactionList.add(new Transaction(5, "JK", "MN"));
-        transactionList.add(new Transaction(5, "ST", "HI"));
+        transactionEntryList.add(new TransactionEntry(3, "HI", "YZ"));
+        transactionEntryList.add(new TransactionEntry(4, "CD", "MN"));
+        transactionEntryList.add(new TransactionEntry(5, "JK", "MN"));
+        transactionEntryList.add(new TransactionEntry(5, "ST", "HI"));
 
-        transactionList.add(new Transaction(6, "ST", "JK"));
-        transactionList.add(new Transaction(7, "JK", "ST"));
-        transactionList.add(new Transaction(8, "FG", "JK"));
-        transactionList.add(new Transaction(8, "UV", "ST"));
+        transactionEntryList.add(new TransactionEntry(6, "ST", "JK"));
+        transactionEntryList.add(new TransactionEntry(7, "JK", "ST"));
+        transactionEntryList.add(new TransactionEntry(8, "FG", "JK"));
+        transactionEntryList.add(new TransactionEntry(8, "UV", "ST"));
 
-        transactionList.add(new Transaction(9, "FG", "UV"));
-        transactionList.add(new Transaction(10, "UV", "YZ"));
+        transactionEntryList.add(new TransactionEntry(9, "FG", "UV"));
+        transactionEntryList.add(new TransactionEntry(10, "UV", "YZ"));
 
 
 
         //convert transaction data into linked graph
-        txData = new TransactionData(transactionList);
+        txData = TransactionData.initialize(transactionEntryList);
 
     }
 
