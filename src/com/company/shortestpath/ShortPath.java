@@ -8,7 +8,7 @@ public class ShortPath {
 
     private TransactionData txData;
 
-    void setup(){
+    private void setup(){
         //create transaction data.
 
         List<Transaction> transactionList = new ArrayList<>();
