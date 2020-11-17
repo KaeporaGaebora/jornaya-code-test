@@ -46,38 +46,25 @@ public class ShortPath {
         // * The longest possible path is the total number of accounts (Based on above)
 
 
-        AccountNode to = AccountNode.findAccount(account);
-        if (to == null){
+        AccountNode target = AccountNode.findNode(account);
+        if (target == null){
             throw new ShortPathException("Target Account Not Found");
         }
 
-        return pathLength(rootNode, to, asofTime);
+
+
+
+        int distance =  rootNode.pathLength(target, asofTime);
+
+        if (distance == -1) {
+            throw new ShortPath.ShortPathException("No Path Found at Point in Time");
+        }
+
+        return distance;
     }
 
 
-    private int pathLength(AccountNode from, AccountNode to, int asofTime) throws ShortPathException {
-        //recursive, traverses graph
 
-
-
-        if (from.getTransactions().size() == 0) {
-            throw new ShortPathException("No Path Found at Point in Time");
-        }
-
-        //follow each leg
-
-        //if you found the goal with a distance of 1, short circuit out
-        //otherwise return the shortest
-
-
-        for (Transaction t : from.getTransactions()) {
-
-        }
-
-
-
-        return 0;
-    }
 
 
 
@@ -107,7 +94,7 @@ public class ShortPath {
 
 
 
-    class ShortPathException extends Exception {
+    static class ShortPathException extends Exception {
 
         public ShortPathException(String errorMessage) {
             super(errorMessage);
