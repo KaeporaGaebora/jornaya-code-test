@@ -1,7 +1,9 @@
 package com.company.shortestpath;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ShortPath {
 
@@ -53,9 +55,9 @@ public class ShortPath {
         }
 
 
+        Set<AccountNode> visited = new HashSet<>();
 
-
-        int distance =  rootNode.pathLength(target, asofTime);
+        int distance =  rootNode.pathLength(target, asofTime, visited);
 
         if (distance == -1) {
             throw new ShortPath.ShortPathException("No Path Found at Point in Time");
@@ -72,19 +74,19 @@ public class ShortPath {
     public void tests(){
         setup();
 
-        harness(AccountNode.findNode("ST"), "UV", 9);
+//        harness(AccountNode.findNode("HI"), "UV", 9);
 
-//        harness(rootNode, "JK", 5);
-//        harness(rootNode, "ST", 5);
-//        harness(rootNode, "UV", 9);
-//        harness(rootNode, "FG", 9);
-//        harness(rootNode, "FG", 10);
-//        harness(rootNode, "FG", 3);
-//        harness(rootNode, "AZ", 9);
+        harness(rootNode, "JK", 5);
+        harness(rootNode, "ST", 5);
+        harness(rootNode, "UV", 9);
+        harness(rootNode, "FG", 9);
+        harness(rootNode, "FG", 10);
+        harness(rootNode, "FG", 3);
+        harness(rootNode, "AZ", 9);
     }
 
     private void harness(AccountNode rootNode, String account, int time) {
-        System.out.println("Testing Dest: " + account + " At Time: " + time);
+        System.out.println("Start: " + rootNode + " Dest: " + account + " At Time: " + time);
         int result;
         try {
             result = shortestPath(rootNode, account, time);

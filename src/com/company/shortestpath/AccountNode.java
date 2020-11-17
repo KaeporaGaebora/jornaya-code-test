@@ -117,18 +117,15 @@ public class AccountNode {
 
 
 
-    public int pathLength(AccountNode destination, int asofTime) throws ShortPath.ShortPathException {
+    public int pathLength(AccountNode destination, int asofTime, Set<AccountNode> visited) throws ShortPath.ShortPathException {
         //recursive, traverses graph
 
         //if no path found, returns -1
         //if path found, returns distance
 
 
-        //no transactions out? Path not found
-        if (this.getTransactions().size() == 0) {
-            return -1;
-        }
-
+        // keep track of nodes visited
+        visited.add(this);
 
 
         //follow each leg
@@ -151,8 +148,18 @@ public class AccountNode {
                     return 1;
                 }
 
+                //check if we visited this node already
+                if (visited.contains(to)) {
+                    // don't bother checking this node again
+                    //consider as if it was a dead end
+                    System.out.println("repeat node visited");
+                    continue;
+                }
 
-                int dist = to.pathLength(destination, asofTime);
+                //every new path gets its own history
+                Set<AccountNode> newVisted = new HashSet<>(visited);
+
+                int dist = to.pathLength(destination, asofTime, newVisted);
                 System.out.println(" ("+destination+","+asofTime+") " + this + " to " + to + " returned: " + dist);
 
                 if (dist == -1) {
