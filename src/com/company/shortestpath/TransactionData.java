@@ -1,4 +1,4 @@
-package com.company.recency;
+package com.company.shortestpath;
 
 import java.util.List;
 

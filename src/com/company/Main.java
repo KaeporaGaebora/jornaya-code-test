@@ -1,11 +1,11 @@
 package com.company;
 
-import com.company.recency.Recency;
+import com.company.shortestpath.ShortPath;
 
 public class Main {
 
     public static void main(String[] args) {
-        Recency r = new Recency();
+        ShortPath r = new ShortPath();
         r.tests();
     }
 }

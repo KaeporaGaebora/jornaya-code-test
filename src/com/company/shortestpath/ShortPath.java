@@ -1,9 +1,9 @@
-package com.company.recency;
+package com.company.shortestpath;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recency {
+public class ShortPath {
 
 
     private TransactionData txData;
@@ -38,7 +38,7 @@ public class Recency {
     }
 
 
-    int shortestPath(TransactionData data, String account, int time) throws RecencyException {
+    int shortestPath(TransactionData data, String account, int time) throws ShortPathException {
 
         //assumptions:
         // * There are no circular transactions
@@ -54,7 +54,7 @@ public class Recency {
         //otherwise return the shortest
 
 
-        throw new RecencyException("No Path Found at Point in Time");
+        throw new ShortPathException("No Path Found at Point in Time");
 //        throw new RecencyException("Target Account Not Found");
 
 
@@ -81,7 +81,7 @@ public class Recency {
         try {
             result = shortestPath(txData, "FG", 9);
             System.out.println(result);
-        } catch (RecencyException e) {
+        } catch (ShortPathException e) {
             System.out.println("Error: " + e.getMessage());
         }
         System.out.println();
@@ -90,9 +90,9 @@ public class Recency {
 
 
 
-    class RecencyException extends Exception {
+    class ShortPathException extends Exception {
 
-        public RecencyException(String errorMessage) {
+        public ShortPathException(String errorMessage) {
             super(errorMessage);
         }
     }
