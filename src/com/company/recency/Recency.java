@@ -45,6 +45,42 @@ public class Recency {
 
         //points and ranges are all inclusive
 
+        int numgroups = groups.size();
+
+        //initialize results array with zeros
+        List<Integer> results = new ArrayList<>(Collections.nCopies(numgroups, 0));
+
+        for (Event e : eventList) {
+            for (int i=0; i < numgroups; i++){
+
+                int range = groups.get(i);
+                int count = results.get(i);
+
+                int startTime = asOfTime - range;
+                if (isInRange(e, startTime, asOfTime)) {
+                    count++;
+                }
+
+                results.set(i, count);
+
+
+            }
+
+
+        }
+
+
+        return results;
+    }
+
+
+    //this answer has too many loops
+    public List<Integer> calculateFrequencyNaive(Set<Event> eventList, List<Integer> groups, int asOfTime){
+        //assume given ranges and point in time are valid
+        //assume all events have Category and Timestamp
+
+        //points and ranges are all inclusive
+
         List<Integer> result = new ArrayList<>();
 
 
@@ -64,6 +100,8 @@ public class Recency {
 
         return result;
     }
+
+
 
 
     private boolean isInRange(Event e, Integer start, Integer end){
