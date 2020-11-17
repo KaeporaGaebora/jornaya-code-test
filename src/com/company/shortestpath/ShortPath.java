@@ -71,19 +71,19 @@ public class ShortPath {
     public void tests(){
         setup();
         harness(txData, "JK", 4);
-        harness(txData, "ST", 5);
-        harness(txData, "UV", 9);
-        harness(txData, "FG", 9);
-        harness(txData, "FG", 10);
-        harness(txData, "FG", 3);
-        harness(txData, "AZ", 9);
+//        harness(txData, "ST", 5);
+//        harness(txData, "UV", 9);
+//        harness(txData, "FG", 9);
+//        harness(txData, "FG", 10);
+//        harness(txData, "FG", 3);
+//        harness(txData, "AZ", 9);
     }
 
     private void harness(AccountNode data, String account, int time) {
-        System.out.println("Testing: To: " + account + " At Time: " + time);
+        System.out.println("Testing Dest: " + account + " At Time: " + time);
         int result;
         try {
-            result = shortestPath(txData, "FG", 9);
+            result = shortestPath(data, account, time);
             System.out.println(result);
         } catch (ShortPathException e) {
             System.out.println("Error: " + e.getMessage());

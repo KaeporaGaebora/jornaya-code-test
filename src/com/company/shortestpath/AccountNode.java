@@ -109,6 +109,11 @@ public class AccountNode {
         return Objects.hash(accountName);
     }
 
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
 
 
     public int pathLength(AccountNode destination, int asofTime) throws ShortPath.ShortPathException {
@@ -143,7 +148,7 @@ public class AccountNode {
                 AccountNode to = t.accountTo;
 
                 int dist = to.pathLength(destination, asofTime);
-
+                System.out.println(" ("+destination+","+asofTime+") " + this + " to " + to + " returned: " + dist);
                 if (dist == -1) {
                     //dead end
                     continue;
