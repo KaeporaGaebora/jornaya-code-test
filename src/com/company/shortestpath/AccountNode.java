@@ -24,6 +24,7 @@ public class AccountNode {
             if (entry.getAccount_from() == null) {
                 //create root node
                 rootNode = new AccountNode(entry.getAccount_to());
+                accounts.add(rootNode);
             } else {
                 AccountNode from = findOrCreate(entry.getAccount_from());
                 AccountNode to = findOrCreate(entry.getAccount_to());
@@ -120,12 +121,8 @@ public class AccountNode {
         //recursive, traverses graph
 
         //if no path found, returns -1
-        //if this is the object, returns 0
         //if path found, returns distance
 
-        if (this.equals(destination)) {
-            return 0;
-        }
 
         //no transactions out? Path not found
         if (this.getTransactions().size() == 0) {
@@ -147,6 +144,12 @@ public class AccountNode {
 
                 AccountNode to = t.accountTo;
 
+                //short-circuit: if we found a distance of 1, no need to keep searching
+                if (to.equals(destination)) {
+                    return 1;
+                }
+
+
                 int dist = to.pathLength(destination, asofTime);
                 System.out.println(" ("+destination+","+asofTime+") " + this + " to " + to + " returned: " + dist);
                 if (dist == -1) {
@@ -154,10 +157,7 @@ public class AccountNode {
                     continue;
                 }
 
-                //short-circuit: if we found a distance of 1, no need to keep searching
-                if (dist == 0) {
-                    return 1;
-                }
+
 
                 if (dist < shortest || shortest == -1) {
                     //found a path
