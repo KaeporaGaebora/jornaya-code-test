@@ -6,7 +6,7 @@ import java.util.List;
 public class ShortPath {
 
 
-    private TransactionData txData;
+    private AccountNode txData;
 
     private void setup(){
         //create transaction data.
@@ -33,12 +33,12 @@ public class ShortPath {
 
 
         //convert transaction data into linked graph
-        txData = TransactionData.initialize(transactionEntryList);
+        txData = AccountNode.initialize(transactionEntryList);
 
     }
 
 
-    int shortestPath(TransactionData data, String account, int time) throws ShortPathException {
+    public int shortestPath(AccountNode rootNode, String account, int asofTime) throws ShortPathException {
 
         //assumptions:
         // * There are no circular transactions
@@ -46,7 +46,23 @@ public class ShortPath {
         // * The longest possible path is the total number of accounts (Based on above)
 
 
+        AccountNode to = AccountNode.findAccount(account);
+        if (to == null){
+            throw new ShortPathException("Target Account Not Found");
+        }
 
+        return pathLength(rootNode, to, asofTime);
+    }
+
+
+    private int pathLength(AccountNode from, AccountNode to, int asofTime) throws ShortPathException {
+        //recursive, traverses graph
+
+
+
+        if (from.getTransactions().size() == 0) {
+            throw new ShortPathException("No Path Found at Point in Time");
+        }
 
         //follow each leg
 
@@ -54,12 +70,13 @@ public class ShortPath {
         //otherwise return the shortest
 
 
-        throw new ShortPathException("No Path Found at Point in Time");
-//        throw new RecencyException("Target Account Not Found");
+        for (Transaction t : from.getTransactions()) {
+
+        }
 
 
 
-//        return 0;
+        return 0;
     }
 
 
@@ -75,7 +92,7 @@ public class ShortPath {
         harness(txData, "AZ", 9);
     }
 
-    private void harness(TransactionData data, String account, int time) {
+    private void harness(AccountNode data, String account, int time) {
         System.out.println("Testing: To: " + account + " At Time: " + time);
         int result;
         try {

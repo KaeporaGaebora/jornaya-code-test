@@ -4,26 +4,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class TransactionData {
+public class AccountNode {
 
     //each instance of this object is a node in the graph
 
     //traversal may involve hitting the same object multiple times (not optimized)
 
 
-    private static TransactionData rootNode;
+    private static Set<AccountNode> accounts = new HashSet<>();
+
+    private static AccountNode rootNode;
 
 
-    public static TransactionData initialize(List<TransactionEntry> transactionEntryList) {
+    public static AccountNode initialize(List<TransactionEntry> transactionEntryList) {
 
         for (TransactionEntry entry : transactionEntryList) {
             //assume the only node with a null "from" is the root node,
             if (entry.getAccount_from() == null) {
                 //create root node
-                rootNode = new TransactionData(entry.getAccount_to());
+                rootNode = new AccountNode(entry.getAccount_to());
             } else {
-                TransactionData from = findOrCreate(entry.getAccount_from());
-                TransactionData to = findOrCreate(entry.getAccount_to());
+                AccountNode from = findOrCreate(entry.getAccount_from());
+                AccountNode to = findOrCreate(entry.getAccount_to());
                 from.addTransaction(entry.getTimestamp(), to);
             }
         }
@@ -34,18 +36,18 @@ public class TransactionData {
         return rootNode;
     }
 
-    public static TransactionData findNode(String account) {
+    public static AccountNode findNode(String account) {
         return find(account, false);
     }
 
-    private static TransactionData findOrCreate(String account) {
+    private static AccountNode findOrCreate(String account) {
         return find(account, true);
     }
 
-    private static TransactionData find(String account, boolean createIfNotFound) {
+    private static AccountNode find(String account, boolean createIfNotFound) {
         //returns node matching account name
 
-        TransactionData result = null;
+        AccountNode result = null;
 
 
         //traverse graph, starting with rootnode
@@ -58,39 +60,42 @@ public class TransactionData {
 
 
         if (createIfNotFound && result == null) {
-            return new TransactionData(account);
+            return new AccountNode(account);
         }
 
         return result;
     }
 
-
-
-
-    //
-    class Transaction {
-        //contains timestamp, and destination TransactionData
-        public int timestamp;
-        public TransactionData accountTo;
-
-        public Transaction(int timestamp, TransactionData accountTo) {
-            this.timestamp = timestamp;
-            this.accountTo = accountTo;
-        }
+    public static AccountNode findAccount(String account) {
+        //returns null if no account found
+        return null;
     }
+
+
 
 
     //each object
     private Set<Transaction> transactions = new HashSet<>();
     private String account;
 
+    public static AccountNode getRootNode() {
+        return rootNode;
+    }
 
-    public TransactionData(String account) {
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public AccountNode(String account) {
         this.account = account;
     }
 
 
-    private void addTransaction(int timestamp, TransactionData accountTo){
+    private void addTransaction(int timestamp, AccountNode accountTo){
         transactions.add(new Transaction(timestamp, accountTo));
     }
 
