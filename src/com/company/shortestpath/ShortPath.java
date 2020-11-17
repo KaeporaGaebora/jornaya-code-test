@@ -6,7 +6,7 @@ import java.util.List;
 public class ShortPath {
 
 
-    private AccountNode txData;
+    private AccountNode rootNode;
 
     private void setup(){
         //create transaction data.
@@ -33,7 +33,7 @@ public class ShortPath {
 
 
         //convert transaction data into linked graph
-        txData = AccountNode.initialize(transactionEntryList);
+        rootNode = AccountNode.initialize(transactionEntryList);
 
     }
 
@@ -41,9 +41,10 @@ public class ShortPath {
     public int shortestPath(AccountNode rootNode, String account, int asofTime) throws ShortPathException {
 
         //assumptions:
-        // * There are no circular transactions
-        //     this is important - the problem would be a lot harder if there were.
+        // * There _are_ circular transactions
+        //     this is important -
         // * The longest possible path is the total number of accounts (Based on above)
+        //if the length exceeds total number of accounts, thats an easy way to detect circulars
 
 
         AccountNode target = AccountNode.findNode(account);
@@ -70,21 +71,24 @@ public class ShortPath {
 
     public void tests(){
         setup();
-        harness(txData, "JK", 4);
-//        harness(txData, "ST", 5);
-//        harness(txData, "UV", 9);
-//        harness(txData, "FG", 9);
-//        harness(txData, "FG", 10);
-//        harness(txData, "FG", 3);
-//        harness(txData, "AZ", 9);
+
+        harness(AccountNode.findNode("ST"), "UV", 9);
+
+//        harness(rootNode, "JK", 5);
+//        harness(rootNode, "ST", 5);
+//        harness(rootNode, "UV", 9);
+//        harness(rootNode, "FG", 9);
+//        harness(rootNode, "FG", 10);
+//        harness(rootNode, "FG", 3);
+//        harness(rootNode, "AZ", 9);
     }
 
-    private void harness(AccountNode data, String account, int time) {
+    private void harness(AccountNode rootNode, String account, int time) {
         System.out.println("Testing Dest: " + account + " At Time: " + time);
         int result;
         try {
-            result = shortestPath(data, account, time);
-            System.out.println(result);
+            result = shortestPath(rootNode, account, time);
+            System.out.println("Total path length: " + result);
         } catch (ShortPathException e) {
             System.out.println("Error: " + e.getMessage());
         }

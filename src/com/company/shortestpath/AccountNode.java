@@ -146,12 +146,15 @@ public class AccountNode {
 
                 //short-circuit: if we found a distance of 1, no need to keep searching
                 if (to.equals(destination)) {
+                    System.out.println(" ("+destination+","+asofTime+") " + this + " to " + to + " returned: 1");
+
                     return 1;
                 }
 
 
                 int dist = to.pathLength(destination, asofTime);
                 System.out.println(" ("+destination+","+asofTime+") " + this + " to " + to + " returned: " + dist);
+
                 if (dist == -1) {
                     //dead end
                     continue;
