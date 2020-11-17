@@ -1,8 +1,11 @@
 package com.company;
 
+import com.company.recency.Recency;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Recency r = new Recency();
+        r.tests();
     }
 }
